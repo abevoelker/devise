@@ -117,10 +117,7 @@ module Devise
       opts[:format] = request_format unless skip_format?
 
       config = Rails.application.config
-
-      if config.respond_to?(:relative_url_root) && config.relative_url_root.present?
-        opts[:script_name] = config.relative_url_root
-      end
+      opts[:script_name] = (config.relative_url_root if config.respond_to?(:relative_url_root))
 
       router_name = Devise.mappings[scope].router_name || Devise.available_router_name
       context = send(router_name)
